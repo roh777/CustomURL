@@ -2,8 +2,39 @@
 <html>
 <head>
 	<title>Main page</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/css/indexpage.css">
+	<script type="text/javascript" src="bootstrap.js"></script>
+
 </head>
+
 <body>
-{{body}}
+
+ <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/users/login">LogIn</a></li>
+            <li role="presentation"><a href="/users/register">Register</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Custom URL Shortener</h3>
+      </div>
+
+ 		{{{body}}}
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          
+
+      <footer class="footer">
+        <p>&copy; 2016 Company, Inc.</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+
 </body>
 </html>
