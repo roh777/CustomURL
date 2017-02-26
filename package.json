@@ -1,0 +1,41 @@
+{
+  "name": "customurl",
+  "version": "1.0.0",
+  "description": "a utility to shorten url with customization options and user login",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roh777/CustomURL.git"
+  },
+  "keywords": [
+    "url",
+    "hashing",
+    "shortner"
+  ],
+  "author": "Rohit Yadav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roh777/CustomURL/issues"
+  },
+  "homepage": "https://github.com/roh777/CustomURL#readme",
+
+  "dependencies" : {
+    "bcryptjs" :"*",
+    "multer":"*",
+    "connect-flash":"*",
+    "cookie-parser":"*",
+    "express":"*",
+    "express-handlebars":"*",
+    "express-session":"*",
+    "express-messages":"*",
+    "express-validator":"*",
+    "mongod":"*",
+    "mongoose":"*",
+    "passport":"*",
+    "passport-http": "*",
+    "passport-local": "*"
+  }
+}
