@@ -37,5 +37,9 @@
     "passport":"*",
     "passport-http": "*",
     "passport-local": "*"
+  },
+
+  "scripts" : {
+    "start" : "node app.js"
   }
 }
