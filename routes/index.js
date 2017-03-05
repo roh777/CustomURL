@@ -3,6 +3,7 @@ var router = express.Router();
 var URL = require('../models/mongoModel');
 var multer = require('multer');
 var upload = multer();
+
 function getRandomCode() {
 	var d = Number(new Date()) * (Math.random());
 	return Math.floor(d);
@@ -22,14 +23,6 @@ router.get('/', function(req, res) {
 	res.render('index');
 });
 
-router.get('/:shortcode', function(req, res) {
-	URL.getURLFromCode(req.params.shortcode, function(err,myurl) {
-		if(err) throw err;
-		res.redirect(myurl.url);
-	});
-	
-});
-
 
 router.post('/', upload.array(), function(req, res) {
 	var url = req.body.url;
@@ -47,6 +40,15 @@ router.post('/', upload.array(), function(req, res) {
 
 	res.send("http://"+req.headers.host+"/"+shortcode);
 
+});
+
+
+router.get('/:shortcode', upload.array(), function(req, res) {
+	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
+		if(err) throw err;
+		res.redirect(myurl.url);
+	});
+	
 });
 
 module.exports = router;
