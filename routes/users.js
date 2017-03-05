@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
+var upload = multer();
 
 router.get('/register', function(req,res) {
 	res.render('register');
