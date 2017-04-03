@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var URL = require('../models/mongoModel');
-var multer = require('multer');
-var upload = multer();
+var URL = require('../models/URLModel');
 
 function getRandomCode() {
 	var d = Number(new Date()) * (Math.random());
