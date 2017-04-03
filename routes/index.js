@@ -1,33 +1,20 @@
 var express = require('express');
 var router = express.Router();
 var URL = require('../models/URLModel');
+var api = require('../api/shortv1');
 
-function getRandomCode() {
-	var d = Number(new Date()) * (Math.random());
-	return Math.floor(d);
-}
-
-var base62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+@#";
-function converToBase62(n) {
-	res = "";
-	while( n > 0) {
-		res += base62.charAt(n%64);
-		n = Math.floor(n/64);
-	}
-	return res;
-}
 
 router.get('/', function(req, res) {
 	res.render('index');
 });
 
 
-router.post('/', upload.array(), function(req, res) {
+router.post('/', function(req, res) {
 	var url = req.body.url;
-	var shortcode = converToBase62(getRandomCode());
+	
 	var myurl = new URL({
 		url: url,
-		shortcode: shortcode,
+		shortcode: api.getShortCode(),
 		created_at: new Date()
 	});
 
