@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 
 //local modules
 var routes = require('./routes/index');
+var user = require('./routes/users');
 
 //app init
 var app = express();
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use('/', routes);
+app.use('/user', user);
 
 app.set('port', (process.env.PORT || 3000));
 
