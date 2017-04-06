@@ -9,6 +9,10 @@ router.get('/', function(req, res) {
 	console.log("Request body in /get" + req);	
 });
 
+router.get('/favicon.ico', function(req, res) {
+	res.status(204);
+});
+
 
 router.post('/', function(req, res) {
 
