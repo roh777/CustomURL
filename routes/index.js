@@ -6,15 +6,18 @@ var api = require('../api/shortv1');
 
 router.get('/', function(req, res) {
 	res.render('index');
+	console.log("Request body in /get" + req);	
 });
 
 
 router.post('/', function(req, res) {
+
 	var url = req.body.url;
-	
+	console.log(req.body);
+	var shortcode = api.getShortCode();
 	var myurl = new URL({
 		url: url,
-		shortcode: api.getShortCode(),
+		shortcode: shortcode,
 		created_at: new Date()
 	});
 
@@ -28,9 +31,12 @@ router.post('/', function(req, res) {
 });
 
 
-router.get('/:shortcode', upload.array(), function(req, res) {
+router.get('/:shortcode',  function(req, res) {
+	console.log("SHORTCODE PARAMS " + req.params.shortcode);
 	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
-		if(err) throw err;
+		if(err) {
+			res.send("Not found in DATABASE");
+		}
 		res.redirect(myurl.url);
 	});
 	

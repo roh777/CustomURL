@@ -4,7 +4,7 @@
   "description": "a utility to shorten url with customization options and user login",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -21,27 +21,20 @@
     "url": "https://github.com/roh777/CustomURL/issues"
   },
   "homepage": "https://github.com/roh777/CustomURL#readme",
-
-  "dependencies" : {
-    "bcryptjs" :"*",
-    "multer":"*",
-    "connect-flash":"*",
-    "cookie-parser":"*",
-    "express":"*",
-    "express-handlebars":"*",
-    "express-session":"*",
-    "express-messages":"*",
-    "express-validator":"*",
-    "mongod":"*",
-    "mongoose":"*",
-    "passport":"*",
+  "dependencies": {
+    "bcryptjs": "*",
+    "connect-flash": "*",
+    "cookie-parser": "*",
+    "express": "^4.15.2",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "mongod": "*",
+    "mongoose": "*",
+    "multer": "*",
+    "passport": "*",
     "passport-http": "*",
     "passport-local": "*"
-  },
-
-  "main": "app.js",
-
-  "scripts" : {
-    "start" : "node app.js"
   }
 }
