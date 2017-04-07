@@ -1,7 +1,7 @@
 const  base64 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+_";
 
 var getRandomCode = function () {
-                var d = Number(new Date()) + (Math.random()*10000);
+                var d = Number(new Date()%1000000000) + (Math.random()*10000);
                 return Math.floor(d);
             }
 
