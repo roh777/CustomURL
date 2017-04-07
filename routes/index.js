@@ -18,11 +18,13 @@ router.post('/', function(req, res) {
 
 	var url = req.body.url;
 	console.log(req.body);
+	var owner = req.user || undefined;
 	var shortcode = api.getShortCode();
 	var myurl = new URL({
 		url: url,
 		shortcode: shortcode,
-		created_at: new Date()
+		created_at: new Date(),
+		owner : owner
 	});
 
 	URL.shortLink(myurl, function(err, url) {

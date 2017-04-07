@@ -1,6 +1,14 @@
 <h1> Register Here </h1>
+
+<div>
+ {{#if message}}
+    <p> {{message}} </p>
+ {{/if}}
+ </div>
+ 
+
 <form action = '/user/register' method = 'post'>
   <input type="text" name="username" placeholder="User Name/Email">
   <input type="password" name="password" placeholder="Password">
-  <button type="submit"> Log In </button>
+  <button type="submit"> Register </button>
 </form>

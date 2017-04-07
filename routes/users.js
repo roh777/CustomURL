@@ -9,7 +9,9 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-router.use(session({secret : '221B Bakers Street'}));
+router.use(session({secret : '221B Bakers Street',
+                    resave: false,
+                    saveUninitialized: false}));
 router.use(cookieParser());
 router.use(passport.initialize());
 router.use(passport.session());
@@ -29,8 +31,13 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  
-});
+  UserModel.findById(id, function(err, user) {
+        done(err, user);
+    })
+ }) ;
+
+
+//GET REQUESTS
 
 router.get('/login', function(req, res) {
     res.render('login');
@@ -40,14 +47,32 @@ router.get('/register', function (req, res) {
     res.render('register');
 });
 
-router.post('/login', passport.authenticate('local', { successRedirect: '/user/profile',
-                                                       failureRedirect: '/login' }));
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.render('index');
+});
+
+router.get('/profile', function (req, res)  {
+  if(req.isAuthenticated())
+    res.render("profile", {user : req.user});
+  else
+    res.send("You need to be logged in to see this page");
+
+});
+
+//POST REQUESTS
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    console.log(req.isAuthenticated());
+    res.redirect('/');
+});
 
 router.post('/register', function(req, res) {
     var user = req.body;
     UserModel.findOne({username: user.username}, function (err, found) {
         if(found) {
-            res.send('User with username '+ found.username+' already exists in database');
+            res.render("register", {message:'User with username '+ found.username+' already exists in database'});
         } else {
             var newUser = new UserModel(user);
             newUser.save();
@@ -55,20 +80,6 @@ router.post('/register', function(req, res) {
         }
     }); 
     console.log('NEW USER IS ===> ', user);
-});
-
-router.post('/logout', function(req, res) {
-    req.logout();
-    res.render('index');
-});
-
-router.get('/profile', function(req, res) {
-    if(req.isAuthenticated()) {
-        console.log("IS AUTHENTICATED --->> ", req.isAuthenticated());
-        res.render(profile);
-    }
-    else
-        res.render('login')
 });
 
 module.exports = router;
