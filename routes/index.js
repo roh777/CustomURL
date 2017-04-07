@@ -29,8 +29,8 @@ router.post('/', function(req, res) {
 		if(err) throw err;
 		console.log("saving : ", url);
 	});
-
-	res.send("http://"+req.headers.host+"/"+shortcode);
+	var miniurl = "http://"+req.headers.host+"/"+shortcode;
+	res.render("index", {shorturl : miniurl});
 
 });
 
