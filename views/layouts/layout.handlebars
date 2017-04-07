@@ -14,13 +14,17 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="/">Home</a></li>
+          {{#if user}}
+            <li role="presentation" class="active"><a href="/user/main">Home</a></li>
              <li role="presentation"><a href="/user/profile">Profile</a></li>
+             <li role="presentation"><a href="/user/logout">Log out</a></li>
+          {{else}}
+            <li role="presentation" class="active"><a href="/">Home</a></li>
             <li role="presentation"><a href="/user/login">LogIn</a></li>
             <li role="presentation"><a href="/user/register">Register</a></li>
-            <li role="presentation"><a href="/user/logout">Log out</a></li>
-
+          {{/if}}
           </ul>
+          
         </nav>
         <h3 class="text-muted">Custom URL Shortener</h3>
       </div>
