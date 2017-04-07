@@ -8,6 +8,7 @@ var Schema = mongoose.Schema,
 var URL = new Schema({
     url : String,
     shortcode : String,
+    owner : String,
     created_at : Date
 });
 
