@@ -9,6 +9,7 @@ var URL = new Schema({
     url : String,
     shortcode : String,
     owner : String,
+    hits : Number,
     created_at : Date
 });
 
@@ -21,7 +22,7 @@ Url.shortLink = function (urlObj, callback) {
 
 Url.getURLFromCode = function (shortcode, callback) {
     var query = {shortcode : shortcode};
-    Url.findOne(query, callback);
+    Url.findOneAndUpdate(query,{$inc: {hits : 1}}, callback);
 };
 
 module.exports = Url; //export model Url.

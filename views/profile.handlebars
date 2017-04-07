@@ -1,9 +1,13 @@
-<h1> Profile </h1>
-<b> {{user.username}} <p>
+<h4>Profile View - {{user}}</h4>
+<hr>
 
 {{#if urls}}
+<div>
+<h4> Here are your shortlinks </h4> 
+</div>
+
  <div class="table-responsive">          
-  <table class="table">
+  <table class="table table-bordered table-sm">
     <thead>
       <tr>
         <th>ShortCode</th>
@@ -17,7 +21,7 @@
      <tr>
       <td> {{shortcode}} </td>
       <td> {{url}} </td>
-      <td> {{owner}} </td>
+      <td> {{hits}} </td>
       <td> {{created_at}} </td>
     </tr>
     {{/each}}

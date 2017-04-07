@@ -1,14 +1,15 @@
-<h1> Register Here </h1>
+<h3> Register Here </h3>
 
-<div>
  {{#if message}}
+<div class="well alert alert-danger">
     <p> {{message}} </p>
- {{/if}}
  </div>
+ {{/if}}
  
 
 <form action = '/user/register' method = 'post'>
   <input type="text" name="username" placeholder="User Name/Email">
   <input type="password" name="password" placeholder="Password">
+  <input type="password" name="password2" placeholder="Confirm Password"> 
   <button type="submit"> Register </button>
 </form>

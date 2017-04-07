@@ -22,6 +22,7 @@ router.post('/', function(req, res) {
 		url: url,
 		shortcode: shortcode,
 		created_at: new Date(),
+		hits : 0
 	});
 
 	URL.shortLink(myurl, function(err, url) {

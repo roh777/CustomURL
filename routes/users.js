@@ -61,7 +61,6 @@ router.get('/login', function(req, res) {
 });
 
 router.get('/register', function (req, res) {
-    console.log('In register', req.user);
     res.render('register');
 });
 
@@ -110,8 +109,9 @@ router.post('/main',checkAuth, function(req, res) {
     var myurl = new URL({
         url: url,
         shortcode: shortcode,
-        created_at: new Date(),
-        owner : req.user.username
+        created_at: new Date().toDateString(),
+        owner : req.user.username,
+        hits : 0
     });
 
     URL.shortLink(myurl, function(err, url) {
