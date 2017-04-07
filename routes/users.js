@@ -29,9 +29,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  // User.findById(id, function(err, user) {
-  //   done(err, user);
-  // });
+  
 });
 
 router.get('/login', function(req, res) {
@@ -42,9 +40,8 @@ router.get('/register', function (req, res) {
     res.render('register');
 });
 
-router.post('/login', passport.authenticate('local'),function(req, res) {
-    res.json(req.user);
-});
+router.post('/login', passport.authenticate('local', { successRedirect: '/user/profile',
+                                                       failureRedirect: '/login' }));
 
 router.post('/register', function(req, res) {
     var user = req.body;
@@ -56,13 +53,23 @@ router.post('/register', function(req, res) {
             newUser.save();
             res.json(user);
         }
-    })
+    }); 
     console.log('NEW USER IS ===> ', user);
 });
 
-router.get('/logout', function(req, res) {
+router.post('/logout', function(req, res) {
     req.logout();
-})
+    res.render('index');
+});
+
+router.get('/profile', function(req, res) {
+    if(req.isAuthenticated()) {
+        console.log("IS AUTHENTICATED --->> ", req.isAuthenticated());
+        res.render(profile);
+    }
+    else
+        res.render('login')
+});
 
 module.exports = router;
 
