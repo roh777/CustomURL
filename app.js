@@ -24,8 +24,8 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use('/', routes);
 app.use('/user', user);
+app.use('/', routes);
 
 app.set('port', (process.env.PORT || 3000));
 

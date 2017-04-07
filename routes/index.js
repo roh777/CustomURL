@@ -6,7 +6,6 @@ var api = require('../api/shortv1');
 
 router.get('/', function(req, res) {
 	res.render('index');
-	console.log("Request body in /get" + req);	
 });
 
 router.get('/favicon.ico', function(req, res) {
@@ -18,13 +17,11 @@ router.post('/', function(req, res) {
 
 	var url = req.body.url;
 	console.log(req.body);
-	var owner = req.user || undefined;
 	var shortcode = api.getShortCode();
 	var myurl = new URL({
 		url: url,
 		shortcode: shortcode,
 		created_at: new Date(),
-		owner : owner
 	});
 
 	URL.shortLink(myurl, function(err, url) {

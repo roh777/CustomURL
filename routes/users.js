@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var URL = require('../models/URLModel');
 var api = require('../api/shortv1');
 var UserModel = require('../models/USERModel.js');
 
@@ -15,6 +16,11 @@ router.use(session({secret : '221B Bakers Street',
 router.use(cookieParser());
 router.use(passport.initialize());
 router.use(passport.session());
+
+router.use(function(req, res, next) {
+    res.locals.user = req.user; // This is the important line
+    next();
+});
 
 passport.use(new LocalStrategy( function(user, password, done) {
     UserModel.findOne({username : user, password : password}, function(err, userfound) {
@@ -34,38 +40,51 @@ passport.deserializeUser(function(id, done) {
   UserModel.findById(id, function(err, user) {
         done(err, user);
     })
- }) ;
+ });
 
+function checkAuth(req, res, next) {
+    if(req.isAuthenticated()) {
+        next();
+    }else {
+        res.render('login', {message : "You need to Log In or register to access this page"});
+    }
+}
 
 //GET REQUESTS
+
+router.get('/main',checkAuth, function(req, res) {
+    res.render('index');
+});
 
 router.get('/login', function(req, res) {
     res.render('login');
 });
 
 router.get('/register', function (req, res) {
+    console.log('In register', req.user);
     res.render('register');
 });
 
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.render('index');
+
+    res.redirect('/');
 });
 
-router.get('/profile', function (req, res)  {
-  if(req.isAuthenticated())
-    res.render("profile", {user : req.user});
-  else
-    res.send("You need to be logged in to see this page");
+router.get('/profile', checkAuth, function (req, res)  {
 
+    var owner = req.user.username;
+    URL.find({owner : owner}, function (err, shorturls) {
+        res.render('profile', {user : owner, urls : shorturls})
+    });
 });
 
 //POST REQUESTS
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
     console.log(req.isAuthenticated());
-    res.redirect('/');
+    res.redirect('/user/main');
 });
 
 router.post('/register', function(req, res) {
@@ -80,6 +99,28 @@ router.post('/register', function(req, res) {
         }
     }); 
     console.log('NEW USER IS ===> ', user);
+});
+
+
+router.post('/main',checkAuth, function(req, res) {
+
+    var url = req.body.url;
+    console.log(req.body);
+    var shortcode = api.getShortCode();
+    var myurl = new URL({
+        url: url,
+        shortcode: shortcode,
+        created_at: new Date(),
+        owner : req.user.username
+    });
+
+    URL.shortLink(myurl, function(err, url) {
+        if(err) throw err;
+        console.log("saving in main for user "+req.user.username, url);
+    });
+    var miniurl = "http://"+req.headers.host+"/"+shortcode;
+    res.render("index", {shorturl : miniurl});
+
 });
 
 module.exports = router;
