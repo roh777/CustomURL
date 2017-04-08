@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node app.js"
   },
-  "scripts" : {
-    "start" : "node app.js"
+  "engines": {
+    "node": "6.10.x",
+    "npm": "3.10.x"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/roh777/CustomURL#readme",
   "dependencies": {
     "bcryptjs": "*",
+    "body-parser": "^1.17.1",
     "connect-flash": "*",
     "cookie-parser": "*",
     "express": "^4.15.2",
