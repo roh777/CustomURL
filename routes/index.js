@@ -21,7 +21,7 @@ router.post('/', function(req, res) {
 	var myurl = new URL({
 		url: url,
 		shortcode: shortcode,
-		created_at: new Date(),
+		created_at: new Date().toDateString(),
 		hits : 0
 	});
 

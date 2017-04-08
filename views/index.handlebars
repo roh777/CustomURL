@@ -4,10 +4,21 @@
     <input type="url" class="form-control"  name="url" placeholder="Enter URL" id = "url">
     <br>
     <button class="btn btn-primary" type="submit" id="shorten">Shorten</button>
+  </div>
 </form>
+
+
 
 <div class = "center-block"> 
   {{#if shorturl}}
    <b> {{shorturl}} </b>
 {{/if}}
 <div>
+
+<script>
+ $( "#advanced" ).click(function() {
+  $( "#advOptions" ).toggle( "slow", function() {
+    // Animation complete.
+  });
+});
+</script>

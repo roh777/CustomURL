@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/urlapp');
+mongoose.connect('mongodb://rohit:yadav@ds155160.mlab.com:55160/urlapp');
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;

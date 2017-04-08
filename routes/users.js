@@ -94,7 +94,7 @@ router.post('/register', function(req, res) {
         } else {
             var newUser = new UserModel(user);
             newUser.save();
-            res.json(user);
+            res.render('login', {message: 'You have been registered. Now you can log in.'});
         }
     }); 
     console.log('NEW USER IS ===> ', user);
