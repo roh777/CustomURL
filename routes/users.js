@@ -104,22 +104,65 @@ router.post('/register', function(req, res) {
 router.post('/main',checkAuth, function(req, res) {
 
     var url = req.body.url;
+    var shortcode;
+    var msg;
     console.log(req.body);
-    var shortcode = api.getShortCode();
-    var myurl = new URL({
-        url: url,
-        shortcode: shortcode,
-        created_at: new Date().toDateString(),
-        owner : req.user.username,
-        hits : 0
-    });
 
-    URL.shortLink(myurl, function(err, url) {
-        if(err) throw err;
-        console.log("saving in main for user "+req.user.username, url);
-    });
-    var miniurl = "http://"+req.headers.host+"/"+shortcode;
-    res.render("index", {shorturl : miniurl});
+    if(req.body.customcode) {
+
+        shortcode = req.body.customcode;
+
+        URL.findOne({
+            shortcode : shortcode
+        }).then(result => {
+            if(result) {
+
+                console.log("\nThe code is already used \n");
+                res.render("index", {shorturl : "error code is already used"});
+
+            } else{
+
+
+                var myurl = new URL({
+                    url: url,
+                    shortcode: shortcode,
+                    created_at: new Date().toDateString(),
+                    owner : req.user.username,
+                    hits : 0
+                 });
+
+                URL.shortLink(myurl, function(err, url) {
+                    if(err) throw err;
+                    console.log("saving in main for user "+req.user.username, url);
+                });
+                var miniurl = "http://"+req.headers.host+"/"+shortcode;
+                res.render("index", {shorturl : miniurl});
+
+            }
+
+        }).catch(error => {
+            res.json({error: error.message});
+        });
+
+    } 
+    else {
+
+        shortcode = api.getShortCode();
+        var myurl = new URL({
+            url: url,
+            shortcode: shortcode,
+            created_at: new Date().toDateString(),
+            owner : req.user.username,
+            hits : 0
+        });
+
+        URL.shortLink(myurl, function(err, url) {
+            if(err) throw err;
+            console.log("saving in main for user "+req.user.username, url);
+        });
+        var miniurl = "http://"+req.headers.host+"/"+shortcode;
+        res.render("index", {shorturl : miniurl});
+    }
 
 });
 
