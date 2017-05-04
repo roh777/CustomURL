@@ -38,10 +38,14 @@ router.post('/', function(req, res) {
 router.get('/:shortcode',  function(req, res) {
 	console.log("SHORTCODE PARAMS " + req.params.shortcode);
 	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
-		if(err) {
-			res.send("Not found in DATABASE");
+
+		if(myurl)
+			res.redirect(myurl.url);
+		else if( err || !myurl) {
+			res.send("The requested short code is invalid");
+
 		}
-		res.redirect(myurl.url);
+		
 	});
 	
 });
