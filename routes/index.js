@@ -46,7 +46,10 @@ router.post('/', upload.array(), function(req, res) {
 router.get('/:shortcode', upload.array(), function(req, res) {
 	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
 		if(err) throw err;
-		res.redirect(myurl.url);
+		if(myurl)
+			res.redirect(myurl.url);
+		else
+			res.redirect("http://localhost:3000");
 	});
 	
 });
