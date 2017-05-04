@@ -81,9 +81,10 @@ router.get('/profile', checkAuth, function (req, res)  {
 
 //POST REQUESTS
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    console.log(req.isAuthenticated());
-    res.redirect('/user/main');
+router.post('/login', passport.authenticate('local', 
+    {successRedirect : '/user/main',failureRedirect : '/user/login'}),
+     function(req, res) {
+        
 });
 
 router.post('/register', function(req, res) {
@@ -97,7 +98,7 @@ router.post('/register', function(req, res) {
             res.render('login', {message: 'You have been registered. Now you can log in.'});
         }
     }); 
-    console.log('NEW USER IS ===> ', user);
+    console.log('New User :\n ', user);
 });
 
 

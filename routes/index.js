@@ -38,13 +38,15 @@ router.post('/', function(req, res) {
 router.get('/:shortcode',  function(req, res) {
 	console.log("SHORTCODE PARAMS " + req.params.shortcode);
 	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
-		console.log("Values recived for err and myurl ", err, myurl);
-		
+
+
+
 		if(myurl)
 			res.redirect(myurl.url);
 		else if( err || !myurl) {
 			res.send("The requested short code is invalid");
 		}
+
 
 	});
 	
