@@ -38,10 +38,18 @@ router.post('/', function(req, res) {
 router.get('/:shortcode',  function(req, res) {
 	console.log("SHORTCODE PARAMS " + req.params.shortcode);
 	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
+
+		if(err) throw err;
+		if(myurl)
+			res.redirect(myurl.url);
+		else
+			res.redirect("http://localhost:3000");
+
 		if(err) {
 			res.send("Not found in DATABASE");
 		}
 		res.redirect(myurl.url);
+
 	});
 	
 });
