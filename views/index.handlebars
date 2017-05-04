@@ -1,8 +1,23 @@
 <h3>Enter long URL </h3>
-
-<form method="post" action="/" enctype="multipart/form-data">
+<form method="post">
   <div class="form-group">
-    <input type="url" class="form-control"  name="url" placeholder="Enter URL">
+    <input type="url" class="form-control"  name="url" placeholder="Enter URL" id = "url">
     <br>
-    <button class="btn btn-primary" type="submit">Shorten</button>
+    {{#if user}}
+      <input type="text" class="form-control" name="customcode" placeholder="Custom Code">
+      <br>
+    {{/if}}
+    <button class="btn btn-primary" type="submit" id="shorten">Shorten</button>
+  </div>
 </form>
+
+
+
+
+
+<div class = "center-block"> 
+  {{#if shorturl}}
+   <b> {{shorturl}} </b>
+{{/if}}
+<div>
+

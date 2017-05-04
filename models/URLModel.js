@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/urlapp');
+mongoose.connect('mongodb://rohit:yadav@ds155160.mlab.com:55160/urlapp');
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
@@ -8,6 +8,8 @@ var Schema = mongoose.Schema,
 var URL = new Schema({
     url : String,
     shortcode : String,
+    owner : String,
+    hits : Number,
     created_at : Date
 });
 
@@ -20,7 +22,7 @@ Url.shortLink = function (urlObj, callback) {
 
 Url.getURLFromCode = function (shortcode, callback) {
     var query = {shortcode : shortcode};
-    Url.findOne(query, callback);
+    Url.findOneAndUpdate(query,{$inc: {hits : 1}}, callback);
 };
 
 module.exports = Url; //export model Url.

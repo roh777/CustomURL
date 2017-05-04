@@ -1,55 +1,55 @@
 var express = require('express');
 var router = express.Router();
-var URL = require('../models/mongoModel');
-var multer = require('multer');
-var upload = multer();
+var URL = require('../models/URLModel');
+var api = require('../api/shortv1');
 
-function getRandomCode() {
-	var d = Number(new Date()) * (Math.random());
-	return Math.floor(d);
-}
-
-var base62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+@#";
-function converToBase62(n) {
-	res = "";
-	while( n > 0) {
-		res += base62.charAt(n%64);
-		n = Math.floor(n/64);
-	}
-	return res;
-}
 
 router.get('/', function(req, res) {
 	res.render('index');
 });
 
+router.get('/favicon.ico', function(req, res) {
+	res.status(204);
+});
 
-router.post('/', upload.array(), function(req, res) {
+
+router.post('/', function(req, res) {
+
 	var url = req.body.url;
-	var shortcode = converToBase62(getRandomCode());
+	console.log(req.body);
+	var shortcode = api.getShortCode();
 	var myurl = new URL({
 		url: url,
 		shortcode: shortcode,
-		created_at: new Date()
+		created_at: new Date().toDateString(),
+		hits : 0
 	});
 
 	URL.shortLink(myurl, function(err, url) {
 		if(err) throw err;
 		console.log("saving : ", url);
 	});
-
-	res.send("http://"+req.headers.host+"/"+shortcode);
+	var miniurl = "http://"+req.headers.host+"/"+shortcode;
+	res.render("index", {shorturl : miniurl});
 
 });
 
 
-router.get('/:shortcode', upload.array(), function(req, res) {
+router.get('/:shortcode',  function(req, res) {
+	console.log("SHORTCODE PARAMS " + req.params.shortcode);
 	URL.getURLFromCode(req.params.shortcode, function(err ,myurl) {
+
 		if(err) throw err;
 		if(myurl)
 			res.redirect(myurl.url);
 		else
 			res.redirect("http://localhost:3000");
+
+		if(err) {
+			res.send("Not found in DATABASE");
+		}
+		res.redirect(myurl.url);
+
 	});
 	
 });
