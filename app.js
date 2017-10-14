@@ -2,6 +2,17 @@ var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 var express = require('express');
 var path = require('path');
+var dotenv = require('dotenv');
+dotenv.config();
+const result = dotenv.config()
+
+if (result.error) {
+  throw result.error
+}
+
+console.log("parsed result is =====>",result.parsed);
+
+
 var mongoose = require('mongoose');
 
 //local modules

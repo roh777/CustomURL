@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://rohit:yadav@ds155160.mlab.com:55160/urlapp');
+mongoose.connect(process.env.PROD_MONGODB);
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
